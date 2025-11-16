@@ -5,26 +5,14 @@
   <title>Livello 3</title>
   <style>
     body {
+      margin: 0;
+      overflow: hidden;
       background: black;
       color: #00ff00;
       font-family: monospace;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
     }
-    .matrix {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;   /* occupa tutta l'altezza dello schermo */
-      background: black;
-      color: #00ff00;
-      font-size: 14px;
-      line-height: 14px;
-      white-space: pre;
-      overflow: hidden;
-      z-index: -1;
+    canvas {
+      display: block;
     }
     .message {
       position: absolute;
@@ -37,17 +25,17 @@
       text-align: center;
       font-size: 18px;
       max-width: 600px;
+      color: #00ff00;
     }
     .binary {
       margin-top: 20px;
       font-size: 14px;
-      color: #00ff00;
       word-wrap: break-word;
     }
   </style>
 </head>
 <body>
-  <div class="matrix" id="matrix"></div>
+  <canvas id="matrix"></canvas>
 
   <div class="message">
     <p>Se sei arrivato fino a quà è perché hai seguito le istruzioni o sei stato furbo.<br>
@@ -62,29 +50,50 @@
   </div>
 
   <script>
-    const matrix = document.getElementById("matrix");
-    const chars = "01";
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
 
-    function generateMatrix() {
-      const cols = Math.floor(window.innerWidth / 14);
-      const rows = Math.floor(window.innerHeight / 14);
-      let content = "";
-      for (let r = 0; r < rows; r++) {
-        let line = "";
-        for (let c = 0; c < cols; c++) {
-          line += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        content += line + "\n";
-      }
-      matrix.textContent = content;
+    // Imposta dimensioni canvas
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const letters = "01";
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+
+    // Array per tracciare la posizione di ogni colonna
+    const drops = [];
+    for (let x = 0; x < columns; x++) {
+      drops[x] = 1;
     }
 
-    // Genera subito e aggiorna ogni 200ms
-    generateMatrix();
-    setInterval(generateMatrix, 200);
+    function draw() {
+      // Sfondo semi-trasparente per effetto scia
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Aggiorna anche se la finestra viene ridimensionata
-    window.addEventListener("resize", generateMatrix);
+      ctx.fillStyle = "#0F0"; // verde
+      ctx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        // Reset quando raggiunge il fondo
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, 33);
+
+    // Aggiorna dimensioni se la finestra cambia
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
   </script>
 </body>
 </html>
