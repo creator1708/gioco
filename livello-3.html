@@ -17,7 +17,7 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 100%;
+      height: 100vh;   /* occupa tutta l'altezza dello schermo */
       background: black;
       color: #00ff00;
       font-size: 14px;
@@ -62,25 +62,13 @@
   </div>
 
   <script>
-    // Effetto Matrix: pioggia di numeri
     const matrix = document.getElementById("matrix");
-    const cols = Math.floor(window.innerWidth / 14);
-    const rows = Math.floor(window.innerHeight / 14);
-    let chars = "01";
-    let content = "";
+    const chars = "01";
 
-    for (let r = 0; r < rows; r++) {
-      let line = "";
-      for (let c = 0; c < cols; c++) {
-        line += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      content += line + "\n";
-    }
-    matrix.textContent = content;
-
-    // Aggiorna ogni 200ms
-    setInterval(() => {
-      content = "";
+    function generateMatrix() {
+      const cols = Math.floor(window.innerWidth / 14);
+      const rows = Math.floor(window.innerHeight / 14);
+      let content = "";
       for (let r = 0; r < rows; r++) {
         let line = "";
         for (let c = 0; c < cols; c++) {
@@ -89,7 +77,14 @@
         content += line + "\n";
       }
       matrix.textContent = content;
-    }, 200);
+    }
+
+    // Genera subito e aggiorna ogni 200ms
+    generateMatrix();
+    setInterval(generateMatrix, 200);
+
+    // Aggiorna anche se la finestra viene ridimensionata
+    window.addEventListener("resize", generateMatrix);
   </script>
 </body>
 </html>
