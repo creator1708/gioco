@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Livello 1</title>
+</head>
+<body style="background:#0b0f14; color:#e6e6e6; font-family:sans-serif; padding:24px;">
+  <h1>Livello 1</h1>
+  <p>Il codice non è visibile a occhio nudo... prova a guardare più a fondo.</p>
+
+  <!-- Attento: Leggi Il Sorgente -->
+  <!-- Codice segreto: ORIGAMI -->
+
+  <div style="margin-top:20px;">
+    <input type="password" id="code" placeholder="Codice">
+    <button id="btn">Sblocca</button>
+  </div>
+
+  <script>
+    const NEXT = "livello-2.html";   // pagina successiva
+    const SECRET = "ORIGAMI";        // codice nascosto nei commenti
+    document.getElementById('btn').addEventListener('click', () => {
+      const c = document.getElementById('code').value.trim();
+      if (c.toUpperCase() === SECRET) location.href = NEXT;
+      else alert("Codice errato");
+    });
+  </script>
+</body>
+</html>
