@@ -2,10 +2,36 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <title>Il mio enigma</title>
+  <title>Ingresso | Enigma</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background:#0b0f14; color:#e6e6e6; display:flex; min-height:100vh; align-items:center; justify-content:center; }
+    .box { max-width:520px; width:100%; background:#121822; padding:24px; border:1px solid #1f2733; border-radius:8px; }
+    h1 { margin:0 0 8px; font-size:22px; letter-spacing:1px; }
+    p { color:#9aa3ad; }
+    input { width:100%; padding:10px 12px; margin:12px 0; background:#0b0f14; border:1px solid #2a3443; color:#e6e6e6; border-radius:6px; }
+    button { padding:10px 14px; background:#2a3443; color:#e6e6e6; border:0; border-radius:6px; cursor:pointer; }
+    .error { color:#ff5e5e; margin-top:8px; display:none; }
+  </style>
 </head>
-<body style="background:#0b0f14; color:#e6e6e6; font-family:sans-serif;">
-  <h1>Benvenuto nel gioco enigma!</h1>
-  <p>Questa è la pagina iniziale. Presto ci sarà il codice segreto per accedere al livello 1.</p>
+<body>
+  <div class="box">
+    <h1>Accesso al livello 1</h1>
+    <p>Inserisci il codice per accedere.</p>
+    <input type="password" id="code" placeholder="Codice segreto">
+    <button id="btn">Accedi</button>
+    <div class="error" id="err">Codice errato.</div>
+  </div>
+  <script>
+    const NEXT = "livello-1.html";   // pagina successiva
+    const SECRET = "3301";           // codice segreto da indovinare
+    document.getElementById('btn').addEventListener('click', () => {
+      const code = document.getElementById('code').value.trim();
+      if (code.toLowerCase() === SECRET.toLowerCase()) {
+        location.href = NEXT;
+      } else {
+        document.getElementById('err').style.display='block';
+      }
+    });
+  </script>
 </body>
 </html>
