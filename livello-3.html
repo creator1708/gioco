@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Livello 3</title>
+  <style>
+    body {
+      background: black;
+      color: #00ff00;
+      font-family: monospace;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    .matrix {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+      color: #00ff00;
+      font-size: 14px;
+      line-height: 14px;
+      white-space: pre;
+      overflow: hidden;
+      z-index: -1;
+    }
+    .message {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.8);
+      padding: 20px;
+      border: 1px solid #00ff00;
+      text-align: center;
+      font-size: 18px;
+      max-width: 600px;
+    }
+    .binary {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #00ff00;
+      word-wrap: break-word;
+    }
+  </style>
+</head>
+<body>
+  <div class="matrix" id="matrix"></div>
+
+  <div class="message">
+    <p>Se sei arrivato fino a quà è perché hai seguito le istruzioni o sei stato furbo.<br>
+    In ogni caso adesso inizia quello che nessuno vorrebbe fare.</p>
+    <div class="binary">
+      01101100 01100001 00100000 01110000 01100101 01110010 01110011 01101111 01101110 01100001<br>
+      00100000 01100001 00100000 01110100 01100101 00100000 01110000 01110000 01101001 01110101<br>
+      00100000 01100011 01100001 01110010 01100001 00101100 00100000 01100001 00100000 01101100<br>
+      01100101 01101001 00100000 01100100 01100101 01110110 01101001 00100000 01100011 01101000<br>
+      01101001 01100101 01100100 01100101
+    </div>
+  </div>
+
+  <script>
+    // Effetto Matrix: pioggia di numeri
+    const matrix = document.getElementById("matrix");
+    const cols = Math.floor(window.innerWidth / 14);
+    const rows = Math.floor(window.innerHeight / 14);
+    let chars = "01";
+    let content = "";
+
+    for (let r = 0; r < rows; r++) {
+      let line = "";
+      for (let c = 0; c < cols; c++) {
+        line += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      content += line + "\n";
+    }
+    matrix.textContent = content;
+
+    // Aggiorna ogni 200ms
+    setInterval(() => {
+      content = "";
+      for (let r = 0; r < rows; r++) {
+        let line = "";
+        for (let c = 0; c < cols; c++) {
+          line += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        content += line + "\n";
+      }
+      matrix.textContent = content;
+    }, 200);
+  </script>
+</body>
+</html>
